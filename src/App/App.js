@@ -8,9 +8,8 @@ import Login from "./../Components/Login/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Firebase/firebase-config";
 import { useStateValue } from "../Context/StateProvider";
-
 function App() {
-  const [{}, dispatch] = useStateValue();
+  const [initialState, dispatch] = useStateValue();
 
   useEffect(() => {
     onAuthStateChanged(auth, (userCredential) => {
@@ -30,7 +29,7 @@ function App() {
         });
       }
     });
-  }, []);
+  }, [dispatch]);
   return (
     <Router>
       <div className="app">
