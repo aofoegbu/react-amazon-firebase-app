@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Home from "../Components/Home/Home";
 import Checkout from "../Components/Checkout/Checkout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./../Components/Header/Header";
 import Login from "./../Components/Login/Login";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./Firebase/firebase-config";
+import { useStateValue } from "../Context/StateProvider";
 
 function App() {
+  const [{}, dispatch] = useStateValue();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (userCredential) => {
+      const user = userCredential.user;
+      console.log("The user is >>>>", user);
+      if (user) {
+        dispatch({
+          type: "SET_USER",
+          user: user,
+        });
+        // the user is logged in
+      } else {
+        // the user is logged out
+        dispatch({
+          type: "SET_USER",
+          user: {},
+        });
+      }
+    });
+  }, []);
   return (
     <Router>
       <div className="app">
@@ -18,6 +42,7 @@ function App() {
             element={
               <>
                 <Header />
+                {/* carousel */}
                 <Home />
               </>
             }

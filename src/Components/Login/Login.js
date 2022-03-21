@@ -11,7 +11,7 @@ import {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const navigate = useNavigate();
 
   const signIn = (e) => {
@@ -21,7 +21,7 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setUserData(user);
+        // setUserData(user);
         navigate("/");
         console.log(user);
       })
@@ -38,7 +38,7 @@ function Login() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setUserData(user);
+        // setUserData(user);
 
         console.log(user);
         if (user) {
@@ -56,7 +56,7 @@ function Login() {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        setUserData({});
+        // setUserData({});
         navigate("/");
       })
       .catch((error) => {
@@ -84,14 +84,13 @@ function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <h5>Password</h5>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {userData && !Object.keys(userData).length ? (
+          {/* {userData && !Object.keys(userData).length ? (
             <button
               type="submit"
               onClick={signIn}
@@ -103,7 +102,14 @@ function Login() {
             <button className="login__signInButton" onClick={logOut}>
               Sign Out
             </button>
-          )}
+          )} */}
+          <button
+            type="submit"
+            onClick={signIn}
+            className="login__signInButton"
+          >
+            Sign In
+          </button>
           <p>
             BY signing in, you agree to Ogelo Amazon Clone's Conditions of Use &
             Sale. Please see our Privacy Notice, Our Cookies Notice and Our
