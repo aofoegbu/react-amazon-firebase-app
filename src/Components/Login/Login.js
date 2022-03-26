@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./../../App/Firebase/firebase-config";
@@ -7,12 +7,14 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { state } from "../../Context/StateProvider";
+import { StateContext } from "../../Context/StateProvider";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const state = useContext(StateContext);
 
   const { user } = state();
 

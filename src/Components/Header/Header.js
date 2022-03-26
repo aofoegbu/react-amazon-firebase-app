@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
-import { state } from "./../../Context/StateProvider";
+import { StateContext } from "./../../Context/StateProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "./../../App/Firebase/firebase-config";
 
 function Header() {
-  const { basket, user } = state();
+  const state = useContext(StateContext);
+
+  const { basket, user } = state;
 
   const handleAuthentication = () => {
     if (user) {

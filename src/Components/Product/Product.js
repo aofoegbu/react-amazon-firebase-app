@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Product.css";
-import { state } from "./../../Context/StateProvider";
+import { StateContext } from "./../../Context/StateProvider";
 
 function Product({ id, title, image, price, rating, alt }) {
+  const state = useContext(StateContext);
+
   const dispatch = state();
   // console.log("This is the basket >>> ", basket);
   const addToBasket = () => {

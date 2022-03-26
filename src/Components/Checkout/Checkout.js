@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Checkout.css";
 import Subtotal from "./../Subtotal/Subtotal";
 import CheckoutProduct from "./../CheckoutProduct/CheckoutProduct";
-import { state } from "./../../Context/StateProvider";
+import { StateContext } from "./../../Context/StateProvider";
 
 function Checkout() {
+  const state = useContext(StateContext);
   const { basket, user } = state();
 
   return (

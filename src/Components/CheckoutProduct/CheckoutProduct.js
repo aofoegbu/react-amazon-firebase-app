@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CheckoutProduct.css";
-import { state } from "./../../Context/StateProvider";
+import { StateContext } from "./../../Context/StateProvider";
 function CheckoutProduct({ id, image, title, price, rating, alt }) {
+  const state = useContext(StateContext);
+
   const { dispatch } = state();
   const removeFromBasket = () => {
     // remove the item from the basket
