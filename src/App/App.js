@@ -1,73 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Home from "../Components/Home/Home";
 import Checkout from "../Components/Checkout/Checkout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./../Components/Header/Header";
 import Login from "./../Components/Login/Login";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./Firebase/firebase-config";
-import { useStateValue } from "../Context/StateProvider";
+
+import { StateContext, StateProvider } from "./../Context/StateProvider";
+
 function App() {
-  const [initialState, dispatch] = useStateValue();
+  const state = useContext(StateContext);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (userCredential) => {
-      const user = userCredential.user;
-      console.log("The user is >>>>", user);
-      if (user) {
-        dispatch({
-          type: "SET_USER",
-          user: user,
-        });
-        // the user is logged in
-      } else {
-        // the user is logged out
-        dispatch({
-          type: "SET_USER",
-          user: {},
-        });
-      }
-    });
-  }, [dispatch]);
   return (
-    <Router>
-      <div className="app">
-        {/* <Route path="/header" element={<Header />} /> */}
+    <StateProvider value={state}>
+      <Router>
+        <div className="app">
+          {/* <Route path="/header" element={<Header />} /> */}
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Header />
-                {/* carousel */}
-                <Home />
-              </>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/checkout"
-            element={
-              <>
-                <Header />
-                <Checkout />
-              </>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <>
-                <Header />
-                <Home />
-              </>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header />
+                  {/* carousel */}
+                  <Home />
+                </>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/checkout"
+              element={
+                <>
+                  <Header />
+                  <Checkout />
+                </>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  <Header />
+                  <Home />
+                </>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </StateProvider>
   );
 }
 

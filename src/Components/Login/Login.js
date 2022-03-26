@@ -7,12 +7,34 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { state } from "../../Context/StateProvider";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [userData, setUserData] = useState({});
   const navigate = useNavigate();
+
+  const { user } = state();
+
+  const register = (e) => {
+    e.preventDefault();
+    // fancy firebase register
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // const user = userCredential.user;
+        // setUserData(user);
+
+        // console.log(user);
+        if (userCredential) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode, ", ", errorMessage);
+      });
+  };
 
   const signIn = (e) => {
     e.preventDefault();
@@ -20,35 +42,15 @@ function Login() {
     // some fancy firebase login shit here
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        // const user = userCredential.user;
         // setUserData(user);
         navigate("/");
-        console.log(user);
+        // console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, "\n", errorMessage);
-      });
-  };
-
-  const register = (e) => {
-    e.preventDefault();
-    // fancy firebase register
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        // setUserData(user);
-
-        console.log(user);
-        if (user) {
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, "\n", errorMessage);
+        alert(errorCode, "\n", errorMessage);
       });
   };
 
@@ -57,7 +59,8 @@ function Login() {
       .then(() => {
         // Sign-out successful.
         // setUserData({});
-        navigate("/");
+        // const user = {};
+        // navigate("/");
       })
       .catch((error) => {
         console.log(error.message);
@@ -90,7 +93,8 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {/* {userData && !Object.keys(userData).length ? (
+          {/* {userData && !Object.keys(userData).length ? ( */}
+          {!user ? (
             <button
               type="submit"
               onClick={signIn}
@@ -102,14 +106,15 @@ function Login() {
             <button className="login__signInButton" onClick={logOut}>
               Sign Out
             </button>
-          )} */}
-          <button
+          )}
+          {/* <button
             type="submit"
             onClick={signIn}
             className="login__signInButton"
           >
             Sign In
           </button>
+          */}
           <p>
             BY signing in, you agree to Ogelo Amazon Clone's Conditions of Use &
             Sale. Please see our Privacy Notice, Our Cookies Notice and Our
