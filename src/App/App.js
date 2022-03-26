@@ -6,13 +6,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./../Components/Header/Header";
 import Login from "./../Components/Login/Login";
 
-import { StateContext, StateProvider } from "./../Context/StateProvider";
+import { StateContext } from "./../Context/StateProvider";
 
 function App() {
-  const state = useContext(StateContext);
+  const {state} = useContext(StateContext);
 
   return (
-    <StateProvider value={state}>
       <Router>
         <div className="app">
           {/* <Route path="/header" element={<Header />} /> */}
@@ -50,7 +49,6 @@ function App() {
           </Routes>
         </div>
       </Router>
-    </StateProvider>
   );
 }
 
